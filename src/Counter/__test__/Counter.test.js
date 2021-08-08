@@ -7,10 +7,10 @@ import '@testing-library/jest-dom/extend-expect';
 // Takes two params - 1. Description of what it's doing 2. A function which will contain the logic for our test
 test('Header renders with correct text', () => {
   // Render component in virtual dom
-  const component = render(<Counter />);
+  const { getByTestId } = render(<Counter />);
 
   // Check if that component contains the heading text
-  const headerElement = component.getByTestId('header');
+  const headerElement = getByTestId('header');
 
   // Define our expectations
   expect(headerElement.textContent).toBe('My Counter');
