@@ -14,31 +14,31 @@ test('Header renders with correct text', () => {
   expect(headerElement.textContent).toBe('My Counter');
 });
 
-test("counter initially starts with text '0'", () => {
+test("Counter initially starts with text '0'", () => {
   const { getByTestId } = render(<Counter />);
   const counterElement = getByTestId('counter');
   expect(counterElement.textContent).toBe('0');
 });
 
-test("input contains initial value of '1'", () => {
+test("Input contains initial value of '1'", () => {
   const { getByTestId } = render(<Counter />);
   const inputEl = getByTestId('input');
   expect(inputEl.value).toBe('1');
 });
 
-test('add button renders with +', () => {
+test('Add button renders with +', () => {
   const { getByTestId } = render(<Counter />);
   const addBtn = getByTestId('add-btn');
   expect(addBtn.textContent).toBe('+');
 });
 
-test('subtract button renders with -', () => {
+test('Subtract button renders with -', () => {
   const { getByTestId } = render(<Counter />);
   const subBtn = getByTestId('sub-btn');
   expect(subBtn.textContent).toBe('-');
 });
 
-test('changing input value works correctly', () => {
+test('Changing input value works correctly', () => {
   const { getByTestId } = render(<Counter />);
   const inputEl = getByTestId('input');
   //   use 'fireEvent' to test event change
@@ -51,7 +51,7 @@ test('changing input value works correctly', () => {
   expect(inputEl.value).toBe('5');
 });
 
-test('clicking on plus btn adds 1 to counter', () => {
+test('Clicking on plus btn adds 1 to counter', () => {
   const { getByTestId } = render(<Counter />);
   const addBtnEl = getByTestId('add-btn');
   const counterEl = getByTestId('counter');
@@ -61,7 +61,7 @@ test('clicking on plus btn adds 1 to counter', () => {
   expect(counterEl.textContent).toBe('1');
 });
 
-test('clicking on subtract btn subtracts 1 to counter', () => {
+test('Clicking on subtract btn subtracts 1 to counter', () => {
   const { getByTestId } = render(<Counter />);
   const subBtnEl = getByTestId('sub-btn');
   const counterEl = getByTestId('counter');
@@ -69,4 +69,62 @@ test('clicking on subtract btn subtracts 1 to counter', () => {
   // Fire an event to test the btns ability to increment
   fireEvent.click(subBtnEl);
   expect(counterEl.textContent).toBe('-1');
+});
+
+test('Changing input value then clicking on add btn works correctly', () => {
+  const { getByTestId } = render(<Counter />);
+  const addBtnEl = getByTestId('add-btn');
+  const counterEl = getByTestId('counter');
+  const inputEl = getByTestId('input');
+
+  // Change the input value
+  fireEvent.change(inputEl, {
+    target: {
+      value: '5',
+    },
+  });
+
+  // Click the add btn
+  fireEvent.click(addBtnEl);
+
+  //   Expect our counter to be 5
+  expect(counterEl.textContent).toBe('5');
+});
+
+test('Adding then subtracting produces the correct count value', () => {
+  const { getByTestId } = render(<Counter />);
+  const subBtn = getByTestId('sub-btn');
+  const addBtn = getByTestId('add-btn');
+  const counterEl = getByTestId('counter');
+  const inputEl = getByTestId('input');
+
+  fireEvent.change(inputEl, {
+    target: {
+      value: '10',
+    },
+  });
+
+  fireEvent.click(addBtn);
+
+  fireEvent.change(inputEl, {
+    target: {
+      value: '2',
+    },
+  });
+
+  fireEvent.click(subBtn);
+  fireEvent.click(subBtn);
+
+  expect(counterEl.textContent).toBe('6');
+
+  fireEvent.change(inputEl, {
+    target: {
+      value: '102',
+    },
+  });
+
+  fireEvent.click(addBtn);
+
+  //   Why does this equate to 8??
+  expect(counterEl.textContent).toBe('108');
 });
