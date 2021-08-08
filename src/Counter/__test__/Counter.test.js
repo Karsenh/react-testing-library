@@ -12,6 +12,6 @@ test('Header renders with correct text', () => {
   // Check if that component contains the heading text
   const headerElement = component.getByTestId('header');
 
-  //
+  // Define our expectations
   expect(headerElement.textContent).toBe('My Counter');
 });
