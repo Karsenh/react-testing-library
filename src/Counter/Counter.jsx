@@ -16,7 +16,7 @@ const Counter = () => {
     return (
         <div>
            <h1 data-testid='header'>My Counter</h1>
-            <h2 data-testid='counter'>{counterVal}</h2>
+            <h2 className={`${counterVal >= 100 ? 'green' : '' }${ counterVal <= -100 ? 'red' : ''}`} data-testid='counter'>{counterVal}</h2>
             <button data-testid='sub-btn' onClick={subtractFromCount}>-</button>
             <input className='text-center' type="number" data-testid='input' value={inputVal} onChange={(e) => setInputVal(parseInt(e.target.value))} />
             <button data-testid='add-btn' onClick={addToCount}>+</button>

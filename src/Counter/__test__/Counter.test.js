@@ -128,3 +128,48 @@ test('Adding then subtracting produces the correct count value', () => {
   //   Why does this equate to 8??
   expect(counterEl.textContent).toBe('108');
 });
+
+test('counter consists correct className', () => {
+  const { getByTestId } = render(<Counter />);
+  const inputEl = getByTestId('input');
+  const addBtnEl = getByTestId('add-btn');
+  const subBtnEl = getByTestId('sub-btn');
+  const counterEl = getByTestId('counter');
+
+  expect(counterEl.className).toBe('');
+
+  fireEvent.change(inputEl, {
+    target: {
+      value: '50',
+    },
+  });
+
+  // 50
+  fireEvent.click(addBtnEl);
+
+  // Still empty className
+  expect(counterEl.className).toBe('');
+
+  // 100
+  fireEvent.click(addBtnEl);
+
+  expect(counterEl.className).toBe('green');
+
+  // 150
+  fireEvent.click(addBtnEl);
+
+  expect(counterEl.className).toBe('green');
+
+  // 50
+  fireEvent.click(subBtnEl);
+  fireEvent.click(subBtnEl);
+
+  expect(counterEl.className).toBe('');
+
+  // -100
+  fireEvent.click(subBtnEl);
+  fireEvent.click(subBtnEl);
+  fireEvent.click(subBtnEl);
+
+  expect(counterEl.className).toBe('red');
+});
